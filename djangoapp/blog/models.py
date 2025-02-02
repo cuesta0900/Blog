@@ -2,7 +2,26 @@ from django.db import models
 from utils.rands import slugify_new
 from django.contrib.auth.models import User
 from utils.images import resize_image
+from django_summernote.models import AbstractAttachment
 # Create your models here.
+class PostAttachment(AbstractAttachment): #model para redimensionar imagem no summernote
+    def save(self, *args, **kwargs):
+        if not self.name:
+            self.name = self.file.name
+            
+        current_file_name = str(self.file.name) #Pega o nome do file atual
+        super_save = super().save(args, kwargs) # armazena salvamento em variável
+
+        file_changed = False
+        if self.file: #Se tiver um file
+            file_changed = current_file_name != self.file.name #True se o file foi mudado
+        
+        if file_changed: #se foi mudado faz o redimensionamento da imagem
+            resize_image(self.file, 900, True, 70) #importado do images.py    
+        
+        return super_save #Salva
+    
+
 class Tag(models.Model):
     class Meta:
         verbose_name = 'Tag'
