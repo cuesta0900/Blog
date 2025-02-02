@@ -1,6 +1,7 @@
 from django.db import models
 from utils.rands import slugify_new
 from django.contrib.auth.models import User
+from utils.images import resize_image
 # Create your models here.
 class Tag(models.Model):
     class Meta:
@@ -106,7 +107,18 @@ class Post(models.Model):
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify_new(self.title)
-        return super().save(*args, **kwargs)
+        
+        current_cover_name = str(self.cover.name) #Pega o nome do cover atual
+        super_save = super().save(args, kwargs) # armazena salvamento em variável
+
+        cover_changed = False
+        if self.cover: #Se tiver um cover
+            cover_changed = current_cover_name != self.cover.name #True se o cover foi mudado
+        
+        if cover_changed: #se foi mudado faz o redimensionamento da imagem
+            resize_image(self.cover, 900, True, 70) #importado do images.py    
+        
+        return super_save #Salva
     
     def __str__(self):
         return self.title
