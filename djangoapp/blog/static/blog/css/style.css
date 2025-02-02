@@ -157,6 +157,10 @@ input[type='search']::-webkit-search-results-decoration {
 }
 
 /* Blog */
+img {
+  margin: 0 auto;
+}
+
 body,
 html,
 .blog-wrapper {

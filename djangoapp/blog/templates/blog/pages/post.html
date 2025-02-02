@@ -34,7 +34,7 @@
           <span class="post-meta-link" href="#">
             <i class="fa-solid fa-calendar-days"></i>
             <span>
-              {{post.created_at}}
+              {{post.created_at | date:'l, d/m/Y \à\s H:i'}}
             </span>
           </a>
         </div>
@@ -49,13 +49,13 @@
       </div>
 
       <p class="single-post-excerpt pb-base">
-        {{post.excerpt}}
+        {{post.excerpt | safe}}
       </p>
 
       <div class="separator"></div>
 
       <div class="single-post-content">
-        {% include 'blog/partials/_temp.html' %} 
+        {{post.content | safe}}
       
         <div class="post-tags">
           <span>Tags: </span>
