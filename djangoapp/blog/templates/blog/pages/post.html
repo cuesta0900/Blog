@@ -1,17 +1,29 @@
-{% extends 'blog/base.html' %} 
+{% extends 'blog/base.html' %}
+
+{% block additional_head %}
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.css">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/dracula.min.css">
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/codemirror.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/python/python.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/javascript/javascript.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/htmlmixed/htmlmixed.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/css/css.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.62.2/mode/xml/xml.min.js"></script>
+{% endblock additional_head %}
 
 {% block content %}
 <main class="main-content single-post section-wrapper">
   <div class="single-post-content section-content-narrow">
     <div class="single-post-gap section-gap">
-      
+
       {% if post.cover and post.cover_in_post_content%}
-        <div class="single-post-cover pb-base">
-          <img loading="lazy" src="{{post.cover.url}}" alt="{{post.title}}">
-        </div>
+      <div class="single-post-cover pb-base">
+        <img loading="lazy" src="{{post.cover.url}}" alt="{{post.title}}">
+      </div>
       {% endif %}
 
-      
+
       <h2 class="single-post-title pb-base center">
         {{post.title}}
       </h2>
@@ -22,11 +34,11 @@
             <i class="fa-solid fa-user"></i>
             <span>
               {%if post.created_by.first_name %}
-                {{post.created_by.first_name}}
-                {{post.created_by.last_name}}
+              {{post.created_by.first_name}}
+              {{post.created_by.last_name}}
               {% else %}
-                {{post.created_by.username}}
-              {%endif%} 
+              {{post.created_by.username}}
+              {%endif%}
             </span>
           </a>
         </div>
@@ -36,15 +48,15 @@
             <span>
               {{post.created_at | date:'l, d/m/Y \à\s H:i'}}
             </span>
-          </a>
+            </a>
         </div>
         {% if post.category %}
-          <div class="post-meta-item">
-            <a class="post-meta-link" href="{%url 'blog:category' post.category.slug%}">
-              <i class="fa-solid fa-tag"></i>
-                {{post.category.name}}
-            </a>
-          </div>
+        <div class="post-meta-item">
+          <a class="post-meta-link" href="{%url 'blog:category' post.category.slug%}">
+            <i class="fa-solid fa-tag"></i>
+            {{post.category.name}}
+          </a>
+        </div>
         {% endif %}
       </div>
 
@@ -56,14 +68,14 @@
 
       <div class="single-post-content">
         {{post.content | safe}}
-      
+
         <div class="post-tags">
           <span>Tags: </span>
 
-              <a class="post-tag-link" href="#">
-                <i class="fa-solid fa-link"></i>
-                <span>{{post.tags.name}}</span>
-              </a>
+          <a class="post-tag-link" href="#">
+            <i class="fa-solid fa-link"></i>
+            <span>{{post.tags.name}}</span>
+          </a>
 
           <a class="post-tag-link" href="#">
             <i class="fa-solid fa-link"></i>
@@ -86,9 +98,9 @@
           </a>
 
         </div>
-        
+
       </div>
-    
+
     </div>
   </div>
 </main>
